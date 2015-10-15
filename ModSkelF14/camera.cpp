@@ -1,6 +1,7 @@
 #include <windows.h>
 #include <Fl/gl.h>
 #include <gl/glu.h>
+#include <math.h>
 
 #include "camera.h"
 
@@ -178,9 +179,66 @@ void Camera::applyViewingTransform() {
 
 	// Place the camera at mPosition, aim the camera at
 	// mLookAt, and twist the camera such that mUpVector is up
-	gluLookAt(	mPosition[0], mPosition[1], mPosition[2],
-				mLookAt[0],   mLookAt[1],   mLookAt[2],
-				mUpVector[0], mUpVector[1], mUpVector[2]);
+	//gluLookAt(	mPosition[0], mPosition[1], mPosition[2],
+	//			mLookAt[0],   mLookAt[1],   mLookAt[2],
+	//			mUpVector[0], mUpVector[1], mUpVector[2]);
+
+	lookAt(mPosition, mLookAt, mUpVector);
+}
+
+// gluLookAt equivalent
+void Camera::lookAt(Vec3f eye, Vec3f at, Vec3f up){
+	// eye and center are points, but up is a vector
+	// 1. change center into a vector:
+	// glTranslated(-eX, -eY, -eZ);
+	double eX = eye[0];
+	double eY = eye[1];
+	double eZ = eye[2];
+	double cX = at[0];
+	double cY = at[1];
+	double cZ = at[2];
+	double upX = up[0];
+	double upY = up[1];
+	double upZ = up[2];
+	cX = cX - eX;
+	cY = cY - eY;
+	cZ = cZ - eZ;
+	// 2. The angle of center on xz plane and x axis
+	// i.e. angle to rot so center in the neg. yz plane
+	double a = atan(cZ / cX);
+	if (cX >= 0) {
+		a = a + M_PI / 2;
+	}
+	else {
+		a = a - M_PI / 2;
+	}
+	// 3. The angle between the center and y axis
+	// i.e. angle to rot so center in the negative z axis
+	double b = acos(cY / sqrt(cX * cX + cY * cY + cZ * cZ));
+	b = b - M_PI / 2;
+	// 4. up rotate around y axis (a) radians
+	double upx = upX * cos(a) + upZ * sin(a);
+	double upz = -upX * sin(a) + upZ * cos(a);
+	upX = upx;
+	upZ = upz;
+	// 5. up rotate around x axis (b) radians
+	double upy = upY * cos(b) - upZ * sin(b);
+	upz = upY * sin(b) + upZ * cos(b);
+	upY = upy;
+	upZ = upz;
+	double c = atan(upX / upY);
+	if (upY < 0) {
+		// 6. the angle between up on xy plane and y axis
+		c = c + M_PI;
+	}
+	glRotated(c / M_PI * 180, 0, 0, 1);
+	// up in yz plane
+	glRotated(b / M_PI * 180, 1, 0, 0);
+	// center in negative z axis
+	glRotated(a / M_PI * 180, 0, 1, 0);
+	// center in yz plane
+	glTranslated(-eX, -eY, -eZ);
+	// eye at the origin
 }
 
 #pragma warning(pop)
