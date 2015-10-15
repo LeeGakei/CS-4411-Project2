@@ -305,26 +305,26 @@ void drawTriangularPrism(double length, double width, double thickness){
 
 		glBegin(GL_QUADS);
 		glNormal3d(-1.0, 0.0, 0.0);
-		glVertex3d(0.0, y, -z); glVertex3d(0.0, y, z);
-		glVertex3d(0.0, -y, z); glVertex3d(0.0, -y, -z);
+		glVertex3d(0.0, -z, y); glVertex3d(0.0, z, y);
+		glVertex3d(0.0, z, -y); glVertex3d(0.0, -z, -y);
 
-		glNormal3d(y, -x, 0.0);
-		glVertex3d(0.0, -y, -z); glVertex3d(0.0, -y, z);
-		glVertex3d(x, 0.0, z); glVertex3d(x, 0.0, -z);
+		glNormal3d(y, 0.0, -x);
+		glVertex3d(0.0, -z, -y); glVertex3d(0.0, z, -y);
+		glVertex3d(x, z, 0.0); glVertex3d(x, -z, 0.0);
 
-		glNormal3d(x, y, 0.0);
-		glVertex3d(x, 0.0, -z); glVertex3d(x, 0.0, z);
-		glVertex3d(0.0, y, z); glVertex3d(0.0, y, -z);
+		glNormal3d(x, 0.0, y);
+		glVertex3d(x, -z, 0.0); glVertex3d(x, z, 0.0);
+		glVertex3d(0.0, z, y); glVertex3d(0.0, -z, y);
 		glEnd();
 
 		glBegin(GL_TRIANGLES);
-		glNormal3d(0.0, 0.0, -1.0);
-		glVertex3d(0.0, -y, -z); glVertex3d(x, 0.0, -z);
-		glVertex3d(0.0, y, -z);
+		glNormal3d(0.0, -1.0, 0.0);
+		glVertex3d(0.0, -z, -y); glVertex3d(x, -z, 0.0);
+		glVertex3d(0.0, -z, y);
 
-		glNormal3d(0.0, 0.0, 1.0);
-		glVertex3d(0.0, -y, z); glVertex3d(x, 0.0, z);
-		glVertex3d(0.0, y, z);
+		glNormal3d(0.0, 1.0, 0.0);
+		glVertex3d(0.0, z, -y); glVertex3d(x, z, 0.0);
+		glVertex3d(0.0, z, y);
 		glEnd();
 
 		/* restore the model matrix stack, and switch back to the matrix

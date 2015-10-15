@@ -54,6 +54,14 @@ void SampleModel::draw()
 			glRotated(VAL(MIDDLE_WING_ROTATION), 0, 0, 1);
 			drawBox(2.5, 0.01f, 2);
 			//drawTriangularPrism(3, 2, 0.1f);
+
+				//lower right wing
+				glPushMatrix();
+				glTranslated(2.5, 0, 1);
+				glRotated(VAL(LOWER_WING_ROTATION), 0, 0, 1);
+				drawTriangularPrism(3, 2, 0.1f);
+				glPopMatrix();
+
 			glPopMatrix();
 			
 		glPopMatrix();
@@ -63,11 +71,19 @@ void SampleModel::draw()
 		glRotated(VAL(UPPER_WING_ROTATION), 0, 0, -1);
 		drawBox(-2.5, 0.01f, 2);
 
-			//middle right wing
+			//middle left wing
 			glPushMatrix();
 			glTranslated(-2.5, 0, 0);
 			glRotated(VAL(MIDDLE_WING_ROTATION), 0, 0, -1);
 			drawBox(-2.5, 0.01f, 2);
+
+				//lower left wing
+				glPushMatrix();
+				glTranslated(-2.5, 0, 1);
+				glRotated(VAL(LOWER_WING_ROTATION), 0, 0, -1);
+				drawTriangularPrism(-3, 2, 0.1f);
+				glPopMatrix();
+
 			glPopMatrix();
 			
 		glPopMatrix();
