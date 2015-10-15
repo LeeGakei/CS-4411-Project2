@@ -80,6 +80,10 @@ void closeRayFile();
 // Draw a sphere of radius r
 void drawSphere(double r);
 
+void drawEllipsoid(double x, double y, double z);
+
+void drawTriangularPrism(double length, double width, double thickness);
+
 // Draw an axis-aligned box from origin to (x,y,z)
 void drawBox( double x, double y, double z );
 

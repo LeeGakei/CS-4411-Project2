@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8">
 <whprops>
+<<<<<<< HEAD
 <username>Ray</username>
 <machinename>RAY </machinename>
 <fullname></fullname>
 <datetime>Thursday, 15 October, 2015  9:36:17 PM</datetime>
+=======
+<username>lionel233</username>
+<machinename>LIONEL </machinename>
+<fullname></fullname>
+<datetime>Thursday, October 15, 2015  8:52:04 PM</datetime>
+>>>>>>> e6ba4ca9fbe9371452e2865ead30cadb46c926a7
 </whprops>

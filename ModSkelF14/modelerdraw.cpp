@@ -232,6 +232,107 @@ void drawSphere(double r)
     }
 }
 
+void drawEllipsoid(double x, double y, double z){
+	ModelerDrawState *mds = ModelerDrawState::Instance();
+
+	_setupOpenGl();
+
+	if (mds->m_rayFile)
+	{
+		_dump_current_modelview();
+		fprintf(mds->m_rayFile, "scale(%f,%f,%f,ellipsoid {\n", x, y, z);
+		_dump_current_material();
+		fprintf(mds->m_rayFile, "}))\n");
+	}
+	else
+	{
+		int divisions;
+		GLUquadricObj* gluq;
+
+		switch (mds->m_quality)
+		{
+		case HIGH:
+			divisions = 32; break;
+		case MEDIUM:
+			divisions = 20; break;
+		case LOW:
+			divisions = 12; break;
+		case POOR:
+			divisions = 8; break;
+		}
+
+		gluq = gluNewQuadric();
+		gluQuadricDrawStyle(gluq, GLU_FILL);
+		gluQuadricTexture(gluq, GL_TRUE);
+
+		/* switch to the model matrix and scale by x,y,z. */
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+		glScaled(1, y/x, z/x);
+		gluSphere(gluq, x, divisions, divisions);
+		glPopMatrix();
+
+		gluDeleteQuadric(gluq);
+	}
+}
+
+void drawTriangularPrism(double length, double width, double thickness){
+	ModelerDrawState *mds = ModelerDrawState::Instance();
+
+	_setupOpenGl();
+
+	if (mds->m_rayFile)
+	{
+		_dump_current_modelview();
+		fprintf(mds->m_rayFile,
+			"scale(%f,%f,%f,translate(0.5,0.5,0.5,box {\n", length, width, thickness);
+		_dump_current_material();
+		fprintf(mds->m_rayFile, "})))\n");
+	}
+	else
+	{
+		/* remember which matrix mode OpenGL was in. */
+		int savemode;
+		glGetIntegerv(GL_MATRIX_MODE, &savemode);
+
+		/* switch to the model matrix and scale by x,y,z. */
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+
+		double x = length;
+		double y = width / 2;
+		double z = thickness / 2;
+
+		glBegin(GL_QUADS);
+		glNormal3d(-1.0, 0.0, 0.0);
+		glVertex3d(0.0, y, -z); glVertex3d(0.0, y, z);
+		glVertex3d(0.0, -y, z); glVertex3d(0.0, -y, -z);
+
+		glNormal3d(y, -x, 0.0);
+		glVertex3d(0.0, -y, -z); glVertex3d(0.0, -y, z);
+		glVertex3d(x, 0.0, z); glVertex3d(x, 0.0, -z);
+
+		glNormal3d(x, y, 0.0);
+		glVertex3d(x, 0.0, -z); glVertex3d(x, 0.0, z);
+		glVertex3d(0.0, y, z); glVertex3d(0.0, y, -z);
+		glEnd();
+
+		glBegin(GL_TRIANGLES);
+		glNormal3d(0.0, 0.0, -1.0);
+		glVertex3d(0.0, -y, -z); glVertex3d(x, 0.0, -z);
+		glVertex3d(0.0, y, -z);
+
+		glNormal3d(0.0, 0.0, 1.0);
+		glVertex3d(0.0, -y, z); glVertex3d(x, 0.0, z);
+		glVertex3d(0.0, y, z);
+		glEnd();
+
+		/* restore the model matrix stack, and switch back to the matrix
+		mode we were in. */
+		glPopMatrix();
+		glMatrixMode(savemode);
+	}
+}
 
 void drawBox( double x, double y, double z )
 {
