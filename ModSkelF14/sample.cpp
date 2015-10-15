@@ -41,15 +41,38 @@ void SampleModel::draw()
 	//glRotated(VAL(BODY_ROTATION), 0.0, -1.0, 1.0);
 	drawEllipsoid(VAL(BODY_X), VAL(BODY_Y), VAL(BODY_Z));
 
+	//wing
+	{
 		glPushMatrix();
 		glTranslated(VAL(BODY_X) / VAL(UPPER_WING_PX), VAL(BODY_Y) / VAL(UPPER_WING_PY), -VAL(BODY_Z) / VAL(UPPER_WING_PZ));
-		drawBox(2.5, 0.01f, 2); 
+		glRotated(VAL(UPPER_WING_ROTATION), 0, 0, 1);
+		drawBox(2.5, 0.01f, 2);
+
+			//middle right wing
+			glPushMatrix();
+			glTranslated(2.5,0,0);
+			glRotated(VAL(MIDDLE_WING_ROTATION), 0, 0, 1);
+			drawBox(2.5, 0.01f, 2);
+			//drawTriangularPrism(3, 2, 0.1f);
+			glPopMatrix();
+			
 		glPopMatrix();
 
 		glPushMatrix();
-		glTranslated(VAL(BODY_X) / VAL(UPPER_WING_PX), VAL(BODY_Y) / VAL(UPPER_WING_PY), -VAL(BODY_Z) / VAL(UPPER_WING_PZ));
-		drawBox(2.5, 0.01f, 2);
+		glTranslated(-VAL(BODY_X) / VAL(UPPER_WING_PX), VAL(BODY_Y) / VAL(UPPER_WING_PY), -VAL(BODY_Z) / VAL(UPPER_WING_PZ));
+		glRotated(VAL(UPPER_WING_ROTATION), 0, 0, -1);
+		drawBox(-2.5, 0.01f, 2);
+
+			//middle right wing
+			glPushMatrix();
+			glTranslated(-2.5, 0, 0);
+			glRotated(VAL(MIDDLE_WING_ROTATION), 0, 0, -1);
+			drawBox(-2.5, 0.01f, 2);
+			glPopMatrix();
+			
 		glPopMatrix();
+	}
+
 
 
 	glPopMatrix();
@@ -109,6 +132,10 @@ int main()
 	controls[UPPER_WING_PX] = ModelerControl("UPPER WING PX", 0.1, 3, 0.1f, 1.2);
 	controls[UPPER_WING_PY] = ModelerControl("UPPER WING PY", 0.1, 3, 0.1f, 3);
 	controls[UPPER_WING_PZ] = ModelerControl("UPPER WING PZ", 0.1, 3, 0.1f, 2);
+
+	controls[UPPER_WING_ROTATION] = ModelerControl("UPPER WING ROTATION",  -180, 180, 1, 65);
+	controls[MIDDLE_WING_ROTATION] = ModelerControl("MIDDLE WING ROTATION", -180, 180, 1, 65);
+	controls[LOWER_WING_ROTATION] = ModelerControl("LOWER WING ROTATION",  -180, 180, 1, 65);
 
     ModelerApplication::Instance()->Init(&createSampleModel, controls, NUMCONTROLS);
     return ModelerApplication::Instance()->Run();
