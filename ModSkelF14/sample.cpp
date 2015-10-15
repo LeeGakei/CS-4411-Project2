@@ -38,8 +38,20 @@ void SampleModel::draw()
 	setDiffuseColor(COLOR_RED);
 
 	glPushMatrix();
-	glRotated(VAL(BODY_ROTATION), 0.0, 0.0, -1.0);
+	//glRotated(VAL(BODY_ROTATION), 0.0, -1.0, 1.0);
 	drawEllipsoid(VAL(BODY_X), VAL(BODY_Y), VAL(BODY_Z));
+
+		glPushMatrix();
+		glTranslated(VAL(BODY_X) / VAL(UPPER_WING_PX), VAL(BODY_Y) / VAL(UPPER_WING_PY), -VAL(BODY_Z) / VAL(UPPER_WING_PZ));
+		drawBox(2.5, 0.01f, 2); 
+		glPopMatrix();
+
+		glPushMatrix();
+		glTranslated(VAL(BODY_X) / VAL(UPPER_WING_PX), VAL(BODY_Y) / VAL(UPPER_WING_PY), -VAL(BODY_Z) / VAL(UPPER_WING_PZ));
+		drawBox(2.5, 0.01f, 2);
+		glPopMatrix();
+
+
 	glPopMatrix();
 
 	//glPushMatrix();
@@ -73,7 +85,7 @@ void SampleModel::draw()
 	//	drawCylinder(4, 0.1, 0.2);
 	//	glPopMatrix();
 
-	//glPopMatrix();
+	//glPopMatrix(); 
 }
 
 int main()
@@ -90,9 +102,13 @@ int main()
 
 	//body
 	controls[BODY_X] = ModelerControl("BODY X",0,5,0.1f,1.5);
-	controls[BODY_Y] = ModelerControl("BODY Y",0,5,0.1f,3);
+	controls[BODY_Y] = ModelerControl("BODY Y",0,5,0.1f,2);
 	controls[BODY_Z] = ModelerControl("BODY Z",0,5,0.1f,3 );
 	controls[BODY_ROTATION] = ModelerControl("BODY ROTATION",0,360,1,65);
+
+	controls[UPPER_WING_PX] = ModelerControl("UPPER WING PX", 0.1, 3, 0.1f, 1.2);
+	controls[UPPER_WING_PY] = ModelerControl("UPPER WING PY", 0.1, 3, 0.1f, 3);
+	controls[UPPER_WING_PZ] = ModelerControl("UPPER WING PZ", 0.1, 3, 0.1f, 2);
 
     ModelerApplication::Instance()->Init(&createSampleModel, controls, NUMCONTROLS);
     return ModelerApplication::Instance()->Run();

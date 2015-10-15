@@ -17,6 +17,10 @@ enum SampleModelControls
 	BODY_Z,
 	BODY_ROTATION,	//
 
+	UPPER_WING_PX,
+	UPPER_WING_PY,
+	UPPER_WING_PZ,
+
 	NUMCONTROLS,
 };
 
