@@ -1,6 +1,10 @@
 #include "modelerview.h"
 #include "camera.h"
 
+//for light customlization
+#include "modelerglobals.h"	
+#include "modelerapp.h"
+
 #include <FL/Fl.H>
 #include <FL/Fl_Gl_Window.h>
 #include <FL/gl.h>
@@ -102,8 +106,13 @@ void ModelerView::draw()
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     m_camera->applyViewingTransform();
 
-    glLightfv( GL_LIGHT0, GL_POSITION, lightPosition0 );
-    glLightfv( GL_LIGHT0, GL_DIFFUSE, lightDiffuse0 );
-    glLightfv( GL_LIGHT1, GL_POSITION, lightPosition1 );
-    glLightfv( GL_LIGHT1, GL_DIFFUSE, lightDiffuse1 );
+	GLfloat lightPosition0new[] = { VAL(LIGHT0_X),VAL(LIGHT0_Y), VAL(LIGHT0_Z),0 };
+	GLfloat lightPosition1new[] = { VAL(LIGHT1_X), VAL(LIGHT1_Y), VAL(LIGHT1_Z), 0 };
+	GLfloat lightDiffuse0new[] = { VAL(LIGHT0_INTENSITY), VAL(LIGHT0_INTENSITY), VAL(LIGHT0_INTENSITY), 1 };
+	GLfloat lightDiffuse1new[] = { VAL(LIGHT1_INTENSITY), VAL(LIGHT1_INTENSITY), VAL(LIGHT1_INTENSITY),1 };
+
+	glLightfv(GL_LIGHT0, GL_POSITION, lightPosition0new);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiffuse0new);
+	glLightfv(GL_LIGHT1, GL_POSITION, lightPosition1new);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, lightDiffuse1new);
 }

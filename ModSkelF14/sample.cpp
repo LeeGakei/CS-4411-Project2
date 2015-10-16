@@ -179,7 +179,18 @@ int main()
 	controls[LOWER_TAIL_ROTATION1] = ModelerControl("LOWER_TAIL_ROTATION1", -180, 180, 1, 65);
 	controls[LOWER_TAIL_ROTATION2] = ModelerControl("LOWER_TAIL_ROTATION2", -180, 180, 1, 65);
 
-	//LIGHT,to be finished
+	//LIGHT
+	controls[LIGHT0_X] = ModelerControl("LIGHT0_X", -5, 5, 1, 4);
+	controls[LIGHT0_Y] = ModelerControl("LIGHT0_Y", -5, 5, 1, 2);
+	controls[LIGHT0_Z] = ModelerControl("LIGHT0_Z", -5, 5, 1, -4);
+	controls[LIGHT0_INTENSITY] = ModelerControl("LIGHT0_INTENSITY", 0, 1, 0.1, 0.5);
+
+	controls[LIGHT1_X] = ModelerControl("LIGHT1_X", -5, 5, 1, -2);
+	controls[LIGHT1_Y] = ModelerControl("LIGHT1_Y", -5, 5, 1, 1);
+	controls[LIGHT1_Z] = ModelerControl("LIGHT1_Z", -5, 5, 1, 5);
+	controls[LIGHT1_INTENSITY] = ModelerControl("LIGHT1_INTENSITY", 0, 1, 0.1, 0.5);
+
+
 
     ModelerApplication::Instance()->Init(&createSampleModel, controls, NUMCONTROLS);
     return ModelerApplication::Instance()->Run();
