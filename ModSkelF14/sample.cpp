@@ -160,30 +160,30 @@ int main()
 	controls[ROTATE] = ModelerControl("Rotate", -135, 135, 1, 0);
 
 	//body
-	controls[BODY_X] = ModelerControl("BODY X",0,5,0.1f,1.5);
-	controls[BODY_Y] = ModelerControl("BODY Y",0,5,0.1f,2);
-	controls[BODY_Z] = ModelerControl("BODY Z",0,5,0.1f,3 );
+	controls[BODY_X] = ModelerControl("BODY X",0,5,0.1f,1.1);
+	controls[BODY_Y] = ModelerControl("BODY Y",0,5,0.1f,1.6);
+	controls[BODY_Z] = ModelerControl("BODY Z",0,5,0.1f,3.9 );
 	controls[BODY_ROTATION] = ModelerControl("BODY ROTATION",0,360,1,65);
 
 	//WING
-	controls[UPPER_WING_PX] = ModelerControl("UPPER WING PX", 0.1, 3, 0.1f, 1.2);
+	controls[UPPER_WING_PX] = ModelerControl("UPPER WING PX", 0.1, 3, 0.1f, 1.3);
 	controls[UPPER_WING_PY] = ModelerControl("UPPER WING PY", 0.1, 3, 0.1f, 3);
-	controls[UPPER_WING_PZ] = ModelerControl("UPPER WING PZ", 0.1, 3, 0.1f, 2);
-	controls[UPPER_WING_ROTATION] = ModelerControl("UPPER WING ROTATION",  -180, 180, 1, 65);
-	controls[MIDDLE_WING_ROTATION] = ModelerControl("MIDDLE WING ROTATION", -180, 180, 1, 65);
-	controls[LOWER_WING_ROTATION] = ModelerControl("LOWER WING ROTATION",  -180, 180, 1, 65);
+	controls[UPPER_WING_PZ] = ModelerControl("UPPER WING PZ", 0.1, 3, 0.1f, 3);
+	controls[UPPER_WING_ROTATION] = ModelerControl("UPPER WING ROTATION",  -180, 180, 1, 15);
+	controls[MIDDLE_WING_ROTATION] = ModelerControl("MIDDLE WING ROTATION", -180, 180, 1, -34);
+	controls[LOWER_WING_ROTATION] = ModelerControl("LOWER WING ROTATION",  -180, 180, 1, 76);
 
 	//TAIL
-	controls[UPPER_TAIL_ROTATION1] = ModelerControl("UPPER_TAIL_ROTATION1", -180, 180, 1, 65);
+	controls[UPPER_TAIL_ROTATION1] = ModelerControl("UPPER_TAIL_ROTATION1", -180, 180, 1, -29);
 	controls[UPPER_TAIL_ROTATION2] = ModelerControl("UPPER_TAIL_ROTATION2", -180, 180, 1, 65);
 	controls[LOWER_TAIL_ROTATION1] = ModelerControl("LOWER_TAIL_ROTATION1", -180, 180, 1, 65);
-	controls[LOWER_TAIL_ROTATION2] = ModelerControl("LOWER_TAIL_ROTATION2", -180, 180, 1, 65);
+	controls[LOWER_TAIL_ROTATION2] = ModelerControl("LOWER_TAIL_ROTATION2", -180, 180, 1, 111);
 
 	//LIGHT
 	controls[LIGHT0_X] = ModelerControl("LIGHT0_X", -5, 5, 1, 4);
 	controls[LIGHT0_Y] = ModelerControl("LIGHT0_Y", -5, 5, 1, 2);
 	controls[LIGHT0_Z] = ModelerControl("LIGHT0_Z", -5, 5, 1, -4);
-	controls[LIGHT0_INTENSITY] = ModelerControl("LIGHT0_INTENSITY", 0, 1, 0.1, 0.5);
+	controls[LIGHT0_INTENSITY] = ModelerControl("LIGHT0_INTENSITY", 0, 1, 0.1, 0.8);
 
 	controls[LIGHT1_X] = ModelerControl("LIGHT1_X", -5, 5, 1, -2);
 	controls[LIGHT1_Y] = ModelerControl("LIGHT1_Y", -5, 5, 1, 1);
