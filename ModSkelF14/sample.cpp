@@ -15,6 +15,10 @@ public:
         : ModelerView(x,y,w,h,label) { }
 
     virtual void draw();
+	void animate();
+
+private:
+	int timer = 0;
 };
 
 // We need to make a creator function, mostly because of
@@ -32,6 +36,9 @@ void SampleModel::draw()
     // matrix stuff.  Unless you want to fudge directly with the 
 	// projection matrix, don't bother with this ...
     ModelerView::draw();
+
+	//animation
+	this->animate();
 
 	// draw the floor
 	setAmbientColor(0.1f,0.1f,0.1f);
@@ -110,6 +117,49 @@ void SampleModel::draw()
 		glPopMatrix();
 	}
 
+	//neck
+	{
+		glPushMatrix();
+		glTranslated(0, 0, VAL(BODY_Z));
+		glRotated(VAL(NECK_ROTATION_PX), 0, -1, 0);
+		glRotated(VAL(NECK_ROTATION_PY), -1, 0, 0);
+		drawCylinder(VAL(NECK_HEIGHT), VAL(NECK_RADIUS), VAL(NECK_RADIUS));
+
+		//oars centre
+		{
+			glPushMatrix();
+
+			glTranslated(0, 0, VAL(NECK_HEIGHT));
+			drawSphere(0.5);
+
+			//3 oars
+			{
+				glPushMatrix();
+				glRotated(90, 1, 0, 0);
+				glRotated(VAL(OARS_ROTATION), 0, 1, 0);
+				drawCylinder(3, 0, 0.5);
+				glPopMatrix();
+
+				glPushMatrix();
+				glRotated(90, 1, 0, 0);
+				glRotated(120, 0, 1, 0);
+				glRotated(VAL(OARS_ROTATION), 0, 1, 0);
+				drawCylinder(3, 0, 0.5);
+				glPopMatrix();
+
+				glPushMatrix();
+				glRotated(90, 1, 0, 0);
+				glRotated(240, 0, 1, 0);
+				glRotated(VAL(OARS_ROTATION), 0, 1, 0);
+				drawCylinder(3, 0, 0.5);
+				glPopMatrix();
+			}
+
+			glPopMatrix();
+		}
+		
+		glPopMatrix();
+	}
 
 	glPopMatrix();
 
@@ -145,6 +195,12 @@ void SampleModel::draw()
 	//	glPopMatrix();
 
 	//glPopMatrix(); 
+}
+
+void SampleModel::animate(){
+	//move wing
+	//move tail
+	//move oars
 }
 
 int main()
@@ -190,6 +246,15 @@ int main()
 	controls[LIGHT1_Z] = ModelerControl("LIGHT1_Z", -5, 5, 1, 5);
 	controls[LIGHT1_INTENSITY] = ModelerControl("LIGHT1_INTENSITY", 0, 1, 0.1, 0.5);
 
+	//NECK
+	controls[NECK_RADIUS] = ModelerControl("NECK RADIUS", 0.1, 3, 0.1f, 0.3);
+	controls[NECK_HEIGHT] = ModelerControl("NECK HEIGHT", 0.1, 3, 0.1f, 0.5);
+
+	controls[NECK_ROTATION_PX] = ModelerControl("NECK ROTATION PX", -90, 90, 1, 0);
+	controls[NECK_ROTATION_PY] = ModelerControl("NECK ROTATION PY", -90, 90, 1, 0);
+
+	//OARS
+	controls[OARS_ROTATION] = ModelerControl("OARS ROTATION", -180, 180, 1, 0);
 
 
     ModelerApplication::Instance()->Init(&createSampleModel, controls, NUMCONTROLS);
