@@ -199,8 +199,10 @@ void SampleModel::draw()
 
 void SampleModel::animate(){
 	//move wing
+
 	//move tail
 	//move oars
+	ModelerApplication::Instance()->SetControlValue(OARS_ROTATION, VAL(OARS_ROTATION)+1);
 }
 
 int main()
@@ -255,6 +257,7 @@ int main()
 
 	//OARS
 	controls[OARS_ROTATION] = ModelerControl("OARS ROTATION", -180, 180, 1, 0);
+	controls[OARS_SPEED] = ModelerControl("OARS SPEED", 0, 10, 1, 1);
 
 
     ModelerApplication::Instance()->Init(&createSampleModel, controls, NUMCONTROLS);

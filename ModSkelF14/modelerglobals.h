@@ -47,6 +47,7 @@ enum SampleModelControls
 	NECK_ROTATION_PY,
 
 	OARS_ROTATION,
+	OARS_SPEED,
 
 	NUMCONTROLS,
 };
@@ -59,5 +60,7 @@ enum SampleModelControls
 // We'll be getting the instance of the application a lot; 
 // might as well have it as a macro.
 #define VAL(x) (ModelerApplication::Instance()->GetControlValue(x))
+#define SETVAL(c, v)(ModelerApplication::Instance()->SetControlValue(c, v))
+
 
 #endif
